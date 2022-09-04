@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:diaco/Model/delete_message.dart';
+import 'package:diaco/Model/edit_messages.dart';
 import 'package:diaco/Model/post_message.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +35,34 @@ class GetListCubit extends Cubit<GetListState> {
     try {
       final GetList getList = await diacoRepositories
           .fetchPost(PostMessage(username: username, text: text));
+      emit(state.copyWith(
+          getList: getList, getListStatus: GetListStatus.loaded));
+    } on CustomError catch (e) {
+      emit(
+        state.copyWith(getListStatus: GetListStatus.error, error: e),
+      );
+    }
+  }
+
+  Future<void> deleteMessage(int id) async {
+    emit(state.copyWith(getListStatus: GetListStatus.loading));
+    try {
+      final GetList getList =
+          await diacoRepositories.fetchDelete(DeleteMessage(id: id));
+      emit(state.copyWith(
+          getList: getList, getListStatus: GetListStatus.loaded));
+    } on CustomError catch (e) {
+      emit(
+        state.copyWith(getListStatus: GetListStatus.error, error: e),
+      );
+    }
+  }
+
+  Future<void> updateMessage(int id, String text) async {
+    emit(state.copyWith(getListStatus: GetListStatus.loading));
+    try {
+      final GetList getList =
+          await diacoRepositories.fetchUpdate(EditMessage(id: id, text: text));
       emit(state.copyWith(
           getList: getList, getListStatus: GetListStatus.loaded));
     } on CustomError catch (e) {

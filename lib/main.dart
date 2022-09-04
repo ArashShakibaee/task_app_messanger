@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
+            appBarTheme: AppBarTheme(foregroundColor: Colors.grey.shade800),
             primarySwatch: Colors.blue,
           ),
           initialRoute: LoginScreen.routeName,

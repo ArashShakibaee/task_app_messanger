@@ -1,5 +1,6 @@
 import 'package:diaco/Component/base_container.dart';
 import 'package:diaco/Model/get_list.dart';
+import 'package:diaco/Utils/app_style.dart';
 import 'package:diaco/Utils/pref_manager.dart';
 import 'package:diaco/cubit/GetList/get_list_cubit.dart';
 import 'package:flutter/material.dart';
@@ -54,11 +55,24 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      appBar: AppBar(title: const Text("Message Screen")),
+      appBar: AppBar(
+          elevation: 1,
+          backgroundColor: Colors.grey.shade300,
+          title: const Text(
+            "Message Screen",
+          )),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ElevatedButton(
+                onPressed: () {
+                  context.read<GetListCubit>().getListOfMessages();
+                },
+                child: const Text("Refresh")),
+          )),
           Expanded(
             child: Container(
               color: Colors.grey.shade300,
@@ -105,11 +119,7 @@ class _MessageScreenState extends State<MessageScreen> {
     return BlocConsumer<GetListCubit, GetListState>(
       listener: (context, state) {
         if (state.getListStatus == GetListStatus.error) {
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    content: Text(state.error.errorMsg),
-                  ));
+          context.read<GetListCubit>().getListOfMessages();
         }
       },
       builder: (context, state) {

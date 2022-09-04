@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:diaco/Model/delete_message.dart';
+import 'package:diaco/Model/edit_messages.dart';
 import 'package:diaco/Model/get_list.dart';
 import 'package:diaco/Model/post_message.dart';
 import 'package:diaco/exceptions/diaco_exception.dart';
@@ -31,6 +33,42 @@ class DiacoApiServices {
 
   Future<GetList> setListOfMessages(PostMessage model) async {
     var url = "https://front-challenge.devliom.ir";
+
+    try {
+      final http.Response response = await http.post(Uri.parse(url),
+          body: jsonEncode(model.toJson()),
+          headers: <String, String>{'Content-Type': 'application/json'});
+      if (response.statusCode != 200) {
+        throw DiacoException(httpErrorHandler(response));
+      }
+      final responseBody = json.decode(response.body);
+      final GetList list = GetList.fromJson(responseBody);
+      return list;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetList> deleteMessages(DeleteMessage model) async {
+    var url = "https://front-challenge.devliom.ir/delete";
+
+    try {
+      final http.Response response = await http.post(Uri.parse(url),
+          body: jsonEncode(model.toJson()),
+          headers: <String, String>{'Content-Type': 'application/json'});
+      if (response.statusCode != 200) {
+        throw DiacoException(httpErrorHandler(response));
+      }
+      final responseBody = json.decode(response.body);
+      final GetList list = GetList.fromJson(responseBody);
+      return list;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetList> updateMessages(EditMessage model) async {
+    var url = "https://front-challenge.devliom.ir/update";
 
     try {
       final http.Response response = await http.post(Uri.parse(url),
