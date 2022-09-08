@@ -1,6 +1,4 @@
 import 'package:diaco/Component/base_container.dart';
-import 'package:diaco/Model/get_list.dart';
-import 'package:diaco/Utils/app_style.dart';
 import 'package:diaco/Utils/pref_manager.dart';
 import 'package:diaco/cubit/GetList/get_list_cubit.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +84,7 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
             ),
           ),
-          Expanded(flex: 12, child: _showList()),
+          Expanded(flex: 11, child: _showList()),
           Expanded(
             child: TextField(
               controller: textController,

@@ -1,5 +1,3 @@
-enum GetListStatus { initial, loading, loaded, error }
-
 class GetList {
   GetList({
     required this.status,

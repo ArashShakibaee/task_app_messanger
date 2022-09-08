@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'get_list_cubit.dart';
 
+enum GetListStatus { initial, loading, loaded, error }
+
 class GetListState extends Equatable {
   final GetListStatus getListStatus;
   final GetList getList;
